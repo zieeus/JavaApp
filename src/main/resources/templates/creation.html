@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Registration</title>
+    <link crossorigin="anonymous"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button aria-controls="navbar" aria-expanded="false"
+                    class="navbar-toggle collapsed" data-target="#navbar" data-toggle="collapse"
+                    type="button">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span> <span
+                    class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/}">Registration and
+                Login Module</a>
+        </div>
+    </div>
+</nav>
+
+<br>
+<br>
+<!-- Create HTML registration form -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+
+            <!-- success message -->
+            <!--<div th:if="${param.success}">
+                <div class="alert alert-info">You've successfully registered
+                    to our awesome app!
+                </div>
+            </div>-->
+
+            <h1>Registration</h1>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <form method="POST" th:action="@{/comptes}" th:object="${compte}">
+
+
+
+                <label class="control-label" for="email"> Email </label>
+                <input autofocus="autofocus"
+                       class="form-control" id="email" name="email" required th:field="*{email}"
+                       type="text"/>
+
+            <div class="form-group">
+                <label class="control-label" for="mdp"> Password </label>
+                <input  id="mdp"
+                        type = "password"
+                        name = "mdp"
+                        th:field = "*{mdp}"
+                        class = "form-control"
+                        placeholder="Enter Password"
+
+                />
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="prof_id"> Professeur </label>
+                <br/>
+                <select class="control-label-lg" id="prof_id" th:field="*{prof.id}" >
+                    <option th:each="prof:${profs}"
+                            th:text="${prof.nom}"
+                            th:if="${prof.compte == null}"
+                            th:value="${prof.id}">
+                    </option>
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <button class="btn btn-success" type="submit">Register</button>
+                <span>Already registered? <a href="/" th:href="@{/login}">Login
+								here</a></span>
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+</body>
+</html>

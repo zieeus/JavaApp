@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
+<html dir="ltr"
+      lang="en"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+
+<body>
+<div class="sidebar">
+    <div class="logo-details">
+        <i class='bx bxs-school'></i>
+        <div class="logo_name">Manager</div>
+        <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul class="nav-list" id="nav-search-list">
+        <li>
+            <a>
+                <i class='bx bx-credit-card-front'></i>
+                <span class="links_name" style="font-size: 17px;">Mr.</span>
+            </a>
+            <span class="tooltip">Mr.</span>
+        </li>
+        <li class="mt-4">
+            <i class='bx bx-search'></i>
+            <input id="search-nav-input" onkeyup="navSearch()" placeholder="Search..." type="text">
+            <span class="tooltip">Search</span>
+        </li>
+        <li>
+            <a th:href="@{/home}">
+                <i class='bx bx-grid-alt'></i>
+                <span class="links_name">Home</span>
+            </a>
+            <span class="tooltip">Home</span>
+        </li>
+        <li>
+            <a th:href="@{/comptes/new}">
+                <i class='bx bxs-user-account'></i>
+                <span class="links_name">Users</span>
+            </a>
+            <span class="tooltip">Users</span>
+        </li>
+        <li>
+            <a th:href="@{/filieres}">
+                <i class='bx bx-library'></i>
+                <span class="links_name">Filières</span>
+            </a>
+            <span class="tooltip">Filières</span>
+        </li>
+        <li>
+            <a th:href="@{/professeurs}">
+                <i class='bx bx-user'></i>
+                <span class="links_name">Professeurs</span>
+            </a>
+            <span class="tooltip">Professeurs</span>
+        </li>
+        <li>
+            <a th:href="@{/modules}">
+                <i class='bx bxs-collection'></i>
+                <span class="links_name">Modules</span>
+            </a>
+            <span class="tooltip">Modules</span>
+        </li>
+        <li>
+            <a th:href="@{/note}">
+                <i class='bx bxs-check-square'></i>
+                <span class="links_name">Grades</span>
+            </a>
+            <span class="tooltip">Grades</span>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-cog'></i>
+                <span class="links_name">Setting</span>
+            </a>
+            <span class="tooltip">Setting</span>
+        </li>
+        <li class="profile">
+            <div class="profile-details">
+                <!--<img src="profile.jpg" alt="profileImg">-->
+                <div class="name_job">
+                    <div class="name">Log Out</div>
+                </div>
+            </div>
+            <a id="log_outa" th:href="@{/}">
+                <i class='bx bx-log-out' id="log_out"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+<div class="prof-section">
+    <div class="dial-edit-form container col-5 d-flex align-items-center justify-content-center position-absolute"
+         id="form-con">
+        <div class="container card form-pop shadow-lg d-flex align-items-center justify-content-center" id="popup"
+             style="padding: 50px;">
+            <form class="container text-center" id="form1">
+                <p class="mt-3 display-3 font-weight-bold text-uppercase" id="UEdit"><b>Edit User</b></p>
+                <input class="form-control col-4 my-5" placeholder="Email" type="text">
+                <input class="form-control col-4 mb-5" placeholder="Username" type="text">
+                <div class="form-check form-check-inline mb-5">
+                    <input class="form-check-input" id="role_admin" name="admin" type="radio" value="admin">
+                    <label class="form-check-label" for="role_admin">Admin</label>
+                </div>
+                <div class="form-check form-check-inline mb-5">
+                    <input class="form-check-input" id="role_prof" name="admin" type="radio" value="prof">
+                    <label class="form-check-label" for="role_prof">Professeur</label>
+                </div>
+                <!--<input type="submit" class="btn btn-success rounded mb-5 col-5" value="Submit">-->
+            </form>
+            <div class="inline-block align-items-center">
+                <button class="btn btn-outline-success rounded px-3" form="form1" onclick="closePopup()" type="submit">
+                    Submit
+                </button>
+                <button class="btn btn-outline-warning rounded px-3" onclick="closePopup()" style="margin-left: 20px;">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="dial-edit-form1 container col-5 d-flex align-items-center justify-content-center position-absolute"
+         id="form-con1">
+        <div class="container card form-pop1 shadow-lg d-flex align-items-center justify-content-center" id="popup1"
+             style="padding: 50px;">
+
+        </div>
+    </div>
+    <div class="col d-flex align-items-center justify-content-center flex-column" style="height: 100vh;z-index: 0;">
+        <div class="d-flex justify-content-between align-items-center justify-content-center mb-3">
+            <button class="btn btn-outline-primary d-flex justify-content-between align-items-center" id="addBtn"
+                    onclick="openPopupCreation()" style="margin-right:20px;">Ajouter <i class='bx bx-plus-medical'
+                                                                                        style="margin-left: 7px;"></i>
+            </button>
+            <input class="form-control" id="SearchInput" onkeyup="tableSearch()" placeholder="Search..." type="text">
+        </div>
+        <div class="container">
+            <table class="shadow table table-light table-striped table-hover table-responsive rounded" id="DataTable">
+                <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Action</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="cp:${listComptes}">
+                    <td th:text="${cp.email}"></td>
+                    <td th:text="${cp.role.nom}"></td>
+                    <td><div class="inline-block align-items-center">
+                        <button class="btn btn-outline-primary shadow" onclick="openPopup()"><i
+                                class='bx bxs-edit-alt'></i></button>
+                        <form th:action="@{/comptes/{id}(id=${cp.id})}">
+                            <button class="btn btn-outline-danger shadow edit-delete-spacing"><i
+                                    class='bx bx-trash'></i>
+                            </button>
+                        </form>
+                    </td>
+
+
+                </tr>
+                </tbody>
+            </table>
+
+        </div> <!-- 		End of Container -->
+        <label class="theme" for="theme">
+            <span></span>
+            <span class="theme__toggle-wrap">
+                    <input class="shadow theme__toggle" id="theme" name="theme" role="switch" type="checkbox"
+                           value="dark"/>
+                    <span class="theme__fill"></span>
+                    <span class="theme__icon">
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                    </span>
+                </span>
+            <span></span>
+        </label>
+        <img alt="logo" class="img-fluid p-1 ensa" src="./assets/ensakhLogo.png" width="100px">
+        <img alt="logo" class="img-fluid p-1 ensa" id="dial-E1" src="./assets/ensakhLogo_white.png" width="100px">
+    </div>
+</div>
+<script>
+    let popup = document.getElementById("popup");
+    let ind = document.getElementById("form-con");
+
+    function openPopup() {
+        popup.classList.add("open-popup");
+        ind.classList.add("open-dial-edit-form");
+    }
+
+    function closePopup() {
+        popup.classList.remove("open-popup");
+        ind.classList.remove("open-dial-edit-form");
+    }
+</script>
+<script>
+    let popup1 = document.getElementById("popup1");
+    let ind1 = document.getElementById("form-con1");
+
+    function openPopupCreation() {
+        popup1.classList.add("open-popup1");
+        ind1.classList.add("open-dial-edit-form1");
+    }
+
+    function closePopupCreation() {
+        popup1.classList.remove("open-popup1");
+        ind1.classList.remove("open-dial-edit-form1");
+    }
+</script>
+<script>
+    $("#dial-E1").hide();
+
+    var checkbox = document.getElementById("theme"); //get the checkbox to a variable
+
+    if (sessionStorage.getItem("mode") == "dark") {
+        darkmode(); //if dark mode was on, run this funtion
+    } else {
+        nodark(); //else run this funtion
+    }
+
+    //if the checkbox state is changed, run a funtion
+    checkbox.addEventListener("change", function () {
+        //check if the checkbox is checked or not
+        if (checkbox.checked) {
+            darkmode(); //if the checkbox is checked, run this funtion
+        } else {
+            nodark(); //else run this funtion
+        }
+    });
+
+    //function for checkbox when checkbox is checked
+    function darkmode() {
+        document.body.classList.add("dark-theme"); //add a class to the body tag
+        $("#dial-E1").show();
+        $("#dial-E").hide();
+        $("#addBtn").addClass("btn-outline-light");
+        $("#UEdit").addClass("text-light");
+        $("#Uadd").addClass("text-light");
+        checkbox.checked = true; //set checkbox to be checked state
+        sessionStorage.setItem("mode", "dark"); //store a name & value to know that dark mode is on
+    }
+
+    //function for checkbox when checkbox is not checked
+    function nodark() {
+        document.body.classList.remove("dark-theme"); //remove added class from body tag
+        checkbox.checked = false; //set checkbox to be unchecked state
+        sessionStorage.setItem("mode", "light"); //store a name & value to know that dark mode is off or light mode is on
+        $("#addBtn").removeClass("btn-outline-light");
+        $("#UEdit").removeClass("text-light");
+        $("#Uadd").removeClass("text-light");
+        $("#dial-E").show();
+        $("#dial-E1").hide();
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="../JS/navSearch.js"></script>
+<script src="../JS/filter_rows.js"></script>
+<script src="../JS/sidebar.js"></script>
+<script src="../JS/tableSearch.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js'></script>
+</body>
+
+</html>

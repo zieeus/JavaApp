@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/stylen.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+    <script src="https://unpkg.com/jspdf-autotable"></script>
+    <script src="https://unpkg.com/jspdf"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.dataTables.min.css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://rawcdn.githack.com/FuriosoJack/TableHTMLExport/v2.0.0/src/tableHTMLExport.js"></script>
+
+</head>
+
+<body >
+<div class="sidebar">
+    <div class="logo-details">
+        <i class='bx bxs-school'></i>
+        <div class="logo_name">Manager</div>
+        <i class='bx bx-menu' id="btn"></i>
+    </div>
+    <ul id="nav-search-list" class="nav-list">
+        <li>
+            <a>
+                <i class='bx bx-credit-card-front'></i>
+                <span class="links_name" style="font-size: 17px;">Mr.</span>
+            </a>
+            <span class="tooltip">Mr.</span>
+        </li>
+        <li class="mt-4">
+            <i class='bx bx-search'></i>
+            <input id="search-nav-input" onkeyup="navSearch()" type="text" placeholder="Search...">
+            <span class="tooltip">Search</span>
+        </li>
+        <li>
+            <a th:href="@{/home}">
+                <i class='bx bx-grid-alt'></i>
+                <span class="links_name">Home</span>
+            </a>
+            <span class="tooltip">Home</span>
+        </li>
+        <li>
+            <a th:href="@{/DUsers}">
+                <i class='bx bxs-user-account'></i>
+                <span class="links_name">Users</span>
+            </a>
+            <span class="tooltip">Users</span>
+        </li>
+        <li>
+            <a th:href="@{/filieres}">
+                <i class='bx bx-library'></i>
+                <span class="links_name">Filières</span>
+            </a>
+            <span class="tooltip">Filières</span>
+        </li>
+        <li>
+            <a th:href="@{/professeurs}">
+                <i class='bx bx-user'></i>
+                <span class="links_name">Professeurs</span>
+            </a>
+            <span class="tooltip">Professeurs</span>
+        </li>
+        <li>
+            <a th:href="@{/DModules}">
+                <i class='bx bxs-collection' ></i>
+                <span class="links_name">Modules</span>
+            </a>
+            <span class="tooltip">Modules</span>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bxs-check-square' ></i>
+                <span class="links_name">Grades</span>
+            </a>
+            <span class="tooltip">Grades</span>
+        </li>
+        <li>
+            <a href="#">
+                <i class='bx bx-cog'></i>
+                <span class="links_name">Setting</span>
+            </a>
+            <span class="tooltip">Setting</span>
+        </li>
+        <li class="profile">
+            <div class="profile-details">
+                <!--<img src="profile.jpg" alt="profileImg">-->
+                <div class="name_job">
+                    <div class="name">Log Out</div>
+                </div>
+            </div>
+            <a id="log_outa" th:href="@{/}">
+                <i class='bx bx-log-out' id="log_out"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+<div class="prof-section">
+
+    <div class="col d-flex align-items-center justify-content-center flex-column" style="height: 100%;z-index: 0;">
+        <div class="d-flex justify-content-between align-items-center justify-content-center mb-2 mt-5">
+            <input type="text" class="shadow form-control" id="SearchInput" onkeyup="tableSearch()" placeholder="Search...">
+        </div>
+
+        <div class="">
+            <form id="form1" runat="" class="d-flex align-items-center justify-content-center flex-column">
+                <table id="DataTable" class="display nowrap shadow table table-light table-striped table-hover table-responsive mt-5">
+                    <thead>
+                    <tr>
+                        <th style="padding-right:15px;">N</th>
+
+                        <th style="padding-right:50px;">Nom</th>
+                        <th style="padding-right:50px;">Prénom</th>
+                        <th>Note CC1</th>
+                        <th>Note CC2</th>
+                        <th>Note TP</th>
+                        <th>Note Finale</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Mohamed</td>
+                        <td>Malainine</td>
+                        <td><input type="text" id="CC1" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" id="CC2" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" id="TP" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Ghouzlani</td>
+                        <td>Ziad</td>
+                        <td><input type="text" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Ettoumi</td>
+                        <td>Yassir</td>
+                        <td><input type="text" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Hafdi</td>
+                        <td>Mahfoud</td>
+                        <td><input type="text" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Mamouni</td>
+                        <td>Yassir</td>
+                        <td><input type="text" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Ait Ouchaour</td>
+                        <td>Youssef</td>
+                        <td><input type="text" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Mohamed</td>
+                        <td>Malainine</td>
+                        <td><input type="text" id="CC1" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" id="CC2" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" id="TP" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Mohamed</td>
+                        <td>Malainine</td>
+                        <td><input type="text" id="CC1" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" id="CC2" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" id="TP" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Mohamed</td>
+                        <td>Malainine</td>
+                        <td><input type="text" id="CC1" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" id="CC2" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" id="TP" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Mohamed</td>
+                        <td>Malainine</td>
+                        <td><input type="text" id="CC1" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" id="CC2" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" id="TP" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Mohamed</td>
+                        <td>Malainine</td>
+                        <td><input type="text" id="CC1" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" id="CC2" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" id="TP" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Mohamed</td>
+                        <td>Malainine</td>
+                        <td><input type="text" id="CC1" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" id="CC2" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" id="TP" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Mohamed</td>
+                        <td>Malainine</td>
+                        <td><input type="text" id="CC1" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" id="CC2" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" id="TP" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr><tr>
+                        <td>1</td>
+                        <td>Mohamed</td>
+                        <td>Malainine</td>
+                        <td><input type="text" id="CC1" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" id="CC2" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" id="TP" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Mohamed</td>
+                        <td>Malainine</td>
+                        <td><input type="text" id="CC1" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" id="CC2" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" id="TP" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Mohamed</td>
+                        <td>Malainine</td>
+                        <td><input type="text" id="CC1" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" id="CC2" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" id="TP" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Mohamed</td>
+                        <td>Malainine</td>
+                        <td><input type="text" id="CC1" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" id="CC2" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" id="TP" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Mohamed</td>
+                        <td>Malainine</td>
+                        <td><input type="text" id="CC1" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" id="CC2" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" id="TP" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Mohamed</td>
+                        <td>Malainine</td>
+                        <td><input type="text" id="CC1" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" id="CC2" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" id="TP" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Mohamed</td>
+                        <td>Malainine</td>
+                        <td><input type="text" id="CC1" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" id="CC2" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" id="TP" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Mohamed</td>
+                        <td>Malainine</td>
+                        <td><input type="text" id="CC1" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" id="CC2" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" id="TP" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr><tr>
+                        <td>1</td>
+                        <td>Mohamed</td>
+                        <td>Malainine</td>
+                        <td><input type="text" id="CC1" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" id="CC2" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" id="TP" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr><tr>
+                        <td>1</td>
+                        <td>Mohamed</td>
+                        <td>Malainine</td>
+                        <td><input type="text" id="CC1" class="CC1" placeholder="Insérez la note du CC1"></td>
+                        <td><input type="text" id="CC2" class="CC2" placeholder="Insérez la note du CC2"></td>
+                        <td><input type="text" id="TP" class="TP" placeholder="Insérez la note du TP"></td>
+                        <td></td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <button id="validBtn" type="submit" class="btn btn-outline-primary mt-1 d-flex align-items-center justify-content-center mb-5" onclick="setV()">Valider</button>
+            </form>
+
+        </div> <!-- 		End of Container -->
+        <label for="theme" class="theme">
+            <span></span>
+            <span class="theme__toggle-wrap">
+                    <input type="checkbox" class="shadow theme__toggle" id="theme" role="switch" name="theme" value="dark" />
+                    <span class="theme__fill"></span>
+                    <span class="theme__icon">
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                        <span class="theme__icon-part"></span>
+                    </span>
+                </span>
+            <span></span>
+        </label>
+        <div class="contain">
+            <img src="./assets/ensakhLogo.png" alt="logo" id="dial-E" class="img-fluid p-1 ensa" width="100px">
+            <img src="./assets/ensakhLogo_white.png" alt="logo" id="dial-E1" class="img-fluid p-1 ensa" width="100px">
+        </div>
+        <div class="containing-div" style="left: 30px;">
+            <div id="download-container" class="shadow download-container d-flex align-items-center justify-content-center flex-column pb-3 pt-1 px-2" style="z-index: 39;">
+                <p><h6 id="FExport"><b>Export</b></h6></p>
+                <input type="image" src="../assets/pdf.png" onclick="toP()" width="50px" class="pdf-exp">
+                <input type="image" src="../assets/xls.png" onclick="ExportToExcel('xlsx')" width="50px" class="mt-2 xl-exp">
+            </div>
+        </div>
+    </div>
+</div>
+<script src="jspdf.min.js"></script>
+<script src="jspdf.plugin.autotable.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+<script>
+    $('#CC1,#CC2,#TP').on('keypress keyup keydown', function () {
+        if ($('#CC1').val() == "" || $('#CC2').val() == "" || $('#TP').val() == "" ) {
+            $('#validBtn').prop('disabled', true);
+        }
+        else {
+            $('#validBtn').prop('disabled', false);
+        }
+    });
+</script>
+<script>
+    function ExportToExcel(type, fn, dl) {
+        var elt = document.getElementById('DataTable');
+        var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+        return dl ?
+            XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }):
+            XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
+    }
+</script>
+<!--<script>
+    function setV(){
+        $("input[type='text']").change(function(){
+         $(this).closest('td').text($(this).val())
+        })
+    }
+</script>-->
+<script>
+    function toP() {
+        var doc = new jsPDF()
+        doc.autoTable({ html: '#DataTable' })
+        doc.save('table.pdf')
+    }
+</script>
+<script>
+    $("#dial-E1").hide();
+
+    var checkbox = document.getElementById("theme"); //get the checkbox to a variable
+
+    if (sessionStorage.getItem("mode") == "dark") {
+        darkmode(); //if dark mode was on, run this funtion
+    } else {
+        nodark(); //else run this funtion
+    }
+
+    //if the checkbox state is changed, run a funtion
+    checkbox.addEventListener("change", function() {
+        //check if the checkbox is checked or not
+        if (checkbox.checked) {
+            darkmode(); //if the checkbox is checked, run this funtion
+        } else {
+            nodark(); //else run this funtion
+        }
+    });
+
+    //function for checkbox when checkbox is checked
+    function darkmode() {
+        document.body.classList.add("dark-theme"); //add a class to the body tag
+        $("#dial-E1").show();
+        $("#dial-E").hide();
+        $("#download-container").addClass("download-container-2");
+        $("#download-container").removeClass("download-container");
+        $("#clock-con").toggleClass("dar");
+        checkbox.checked = true; //set checkbox to be checked state
+        sessionStorage.setItem("mode", "dark"); //store a name & value to know that dark mode is on
+    }
+
+    //function for checkbox when checkbox is not checked
+    function nodark() {
+        document.body.classList.remove("dark-theme"); //remove added class from body tag
+        $("#dial-E").show();
+        $("#dial-E1").hide();
+        $("#download-container").addClass("download-container");
+        $("#download-container").removeClass("download-container-2");
+        checkbox.checked = false; //set checkbox to be unchecked state
+        sessionStorage.setItem("mode", "light"); //store a name & value to know that dark mode is off or light mode is on
+    }
+</script>
+<script>
+    let dt = document.getElementsByTagName('td');
+    dt.addEventListener('input', function() {
+        localStorage.setItem('dt', dt.value);
+    })
+    dt.value = localStorage.getItem('dt');
+</script>
+<script>
+    function setV(){
+        let d = document.getElementsByTagName('td');
+        let a = localStorage.getItem('dt');
+        localStorage.setItem('d',a);
+    }
+</script>
+<!--<script>
+    $("#json").on("click", function () {
+        $("#DataTable").tableHTMLExport({
+            type: "json",
+            filename: "sample.json",
+        });
+    });
+    $("#csv").on("click", function () {
+        $("#DataTable").tableHTMLExport({ type: "csv", filename: "sample.csv" });
+    });
+    $("#pdf").on("click", function () {
+        $("#DataTable").tableHTMLExport({ type: "pdf", filename: "sample.pdf" });
+    });
+    $("#txt").on("click", function () {
+        $("#DataTable").tableHTMLExport({ type: "txt", filename: "sample.txt" });
+    });
+</script>-->
+<script  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js">
+</script>
+<script src="fancyTable.js">
+</script>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $(".sampleTable").fancyTable({
+            /* Column number for initial sorting*/
+            sortColumn:0,
+            /* Setting pagination or enabling */
+            pagination: true,
+            /* Rows per page kept for display */
+            perPage:3,
+            globalSearch:true
+        });
+
+    });
+</script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="../JS/navSearch.js"></script>
+<script src="../JS/filter_rows.js"></script>
+<script src="../JS/sidebar.js"></script>
+<script src="../JS/moduleTableSearch.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script crossorigin="anonymous"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+</body>
+
+</html>
